@@ -7,7 +7,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthPage extends StatefulWidget {
-  const AuthPage({Key? key}) : super(key: key);
+  const AuthPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _TestState();
@@ -51,7 +51,7 @@ class _TestState extends State<AuthPage> {
         if (snapshot.hasData) {
           final user = snapshot.data;
 
-          user?.getIdToken().then((value) => idToken = value.substring(0, 40) + "...");
+          user?.getIdToken().then((value) => idToken = "${value?.substring(0, 40)}...");
 
           late final String? email;
           try {
@@ -163,7 +163,7 @@ class _TestState extends State<AuthPage> {
       return;
     }
 
-    _credential = FacebookAuthProvider.credential(result.accessToken!.token);
+    _credential = FacebookAuthProvider.credential(result.accessToken!.tokenString);
 
     // *** Firebase side
     try {
