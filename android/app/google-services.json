@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "747814556887",
-    "project_id": "chpl-test-project",
-    "storage_bucket": "chpl-test-project.appspot.com"
+    "project_number": "515323707514",
+    "project_id": "avisror-dev",
+    "storage_bucket": "avisror-dev.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:747814556887:android:36d0ea63f9d0e702f74c92",
+        "mobilesdk_app_id": "1:515323707514:android:a2c74fa1c3f99ebc143bc3",
         "android_client_info": {
-          "package_name": "com.chplalex.flutter_firebase"
+          "package_name": "com.avisror.app.dev"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "747814556887-fegmqfqjr6hegu1o04e168lla1oef025.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBzojpTItajKdKjYGBq2Re75qjofqoOnQg"
+          "current_key": "AIzaSyAuM2BYosm1ea89q73S5yfihS4mnmkrfm4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "747814556887-fegmqfqjr6hegu1o04e168lla1oef025.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

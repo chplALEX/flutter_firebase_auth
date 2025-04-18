@@ -41,7 +41,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.chplalex.flutter_firebase"
+        applicationId "com.avisror.app.dev"
         minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
@@ -54,7 +54,7 @@ android {
         }
     }
 
-    namespace 'com.chplalex.flutter_firebase'
+    namespace 'com.avisror.app.dev'
 }
 
 flutter {

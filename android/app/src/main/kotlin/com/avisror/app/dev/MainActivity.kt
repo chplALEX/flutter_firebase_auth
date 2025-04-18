@@ -1,4 +1,4 @@
-package com.chplalex.flutter_firebase
+package com.avisror.app.dev
 
 import io.flutter.embedding.android.FlutterActivity
 

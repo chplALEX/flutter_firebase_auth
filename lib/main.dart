@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_firebase/firebase_options.dart';
 import 'package:logging/logging.dart';
 
 import 'auth_page.dart';
@@ -11,16 +13,28 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  Object? initError;
 
-  runApp(AuthApp());
+  try {
+    final firebaseApp = await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    log("Firebase App: $firebaseApp");
+  } catch (error) {
+    initError = error;
+    log("Firebase Init Error => ${error.runtimeType}: $error");
+  }
+
+  runApp(AuthApp(initError: initError));
 }
 
 // ignore: must_be_immutable
 class AuthApp extends StatelessWidget {
-  AuthApp({Key? key}) : super(key: key);
+  AuthApp({super.key, required this.initError});
 
   static const _exitTimeoutInMillis = 2500;
+
+  final Object? initError;
+
+  final _messengerKey = GlobalKey<ScaffoldMessengerState>();
 
   DateTime _timePrevExitPressed = DateTime.now().subtract(const Duration(milliseconds: _exitTimeoutInMillis));
 
@@ -28,6 +42,7 @@ class AuthApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: _messengerKey,
       title: 'Firebase Auth Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -36,15 +51,16 @@ class AuthApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Firebase Demo App'),
         ),
-        body: WillPopScope(
-          onWillPop: () => _onWillPop(context),
-          child: const AuthPage(),
+        body: PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (_, __) => _onPopInvokedWithResult(),
+          child: initError == null ? const AuthPage() : _errorPage(),
         ),
       ),
     );
   }
 
-  Future<bool> _onWillPop(BuildContext context) async {
+  void _onPopInvokedWithResult() {
     final timeLastExitPressed = DateTime.now();
     final diff = timeLastExitPressed.difference(_timePrevExitPressed);
     final canExit = diff.inMilliseconds <= _exitTimeoutInMillis;
@@ -52,17 +68,34 @@ class AuthApp extends StatelessWidget {
 
     log("diff = ${diff.inMilliseconds}, canExit = $canExit");
 
-    if (canExit) return true;
+    if (canExit) {
+      SystemNavigator.pop();
+    }
 
     const snackBar = SnackBar(
       content: Text("Press back again to Exit"),
       duration: Duration(milliseconds: _exitTimeoutInMillis),
     );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
-    log("Press back again to Exit");
+    _messengerKey.currentState?.showSnackBar(snackBar);
+  }
 
-    return false;
+  Widget _errorPage() {
+    final strings = [initError.runtimeType.toString()];
+    if (initError is FirebaseException) {
+      final firebaseError = initError as FirebaseException;
+      strings.add("code: ${firebaseError.code}");
+      strings.add("message: ${firebaseError.message}");
+    } else {
+      strings.add(initError.toString());
+    }
+    return Center(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: strings.map((e) => Text(e)).toList(),
+      ),
+    );
   }
 }
 

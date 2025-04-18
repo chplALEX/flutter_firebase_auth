@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 const loadingStatus = "Loading...";
 
 class AppCheckPage extends StatefulWidget {
-  const AppCheckPage({Key? key}) : super(key: key);
+  const AppCheckPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _TestState();
