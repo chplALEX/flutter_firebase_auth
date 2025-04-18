@@ -26,20 +26,20 @@ class _TestState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    final authWidget = _authWidget(context);
-    final googleWidget = _googleWidget(context);
-    final facebookWidget = _facebookWidget(context);
-    final appleWidget = _appleWidget(context);
-    final anonymousWidget = _anonymousWidget(context);
-    final logoutWidget = _logoutWidget(context);
-
-    final widgets = [authWidget, googleWidget, facebookWidget, appleWidget, anonymousWidget, logoutWidget];
+    final builders = [
+      (BuildContext context) => _authWidget(context),
+      (BuildContext context) => _googleWidget(context),
+      (BuildContext context) => _facebookWidget(context),
+      (BuildContext context) => _appleWidget(context),
+      (BuildContext context) => _anonymousWidget(context),
+      (BuildContext context) => _logoutWidget(context),
+    ];
 
     return SingleChildScrollView(
       child: ListView.separated(
         shrinkWrap: true,
-        itemCount: widgets.length,
-        itemBuilder: (context, index) => widgets[index],
+        itemCount: builders.length,
+        itemBuilder: (context, index) => builders[index](context),
         separatorBuilder: (context, index) => const Divider(),
       ),
     );
