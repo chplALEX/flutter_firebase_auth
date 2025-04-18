@@ -33,11 +33,14 @@ class _TestState extends State<AuthPage> {
     final anonymousWidget = _anonymousWidget(context);
     final logoutWidget = _logoutWidget(context);
 
-    return Container(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [authWidget, googleWidget, facebookWidget, appleWidget, anonymousWidget, logoutWidget],
+    final widgets = [authWidget, googleWidget, facebookWidget, appleWidget, anonymousWidget, logoutWidget];
+
+    return SingleChildScrollView(
+      child: ListView.separated(
+        shrinkWrap: true,
+        itemCount: widgets.length,
+        itemBuilder: (context, index) => widgets[index],
+        separatorBuilder: (context, index) => const Divider(),
       ),
     );
   }
@@ -47,13 +50,16 @@ class _TestState extends State<AuthPage> {
       initialData: null,
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
-        String text;
+        late final String text;
+        late final TextAlign textAlign;
+
         if (snapshot.hasData) {
           final user = snapshot.data;
 
           user?.getIdToken().then((value) => idToken = "${value?.substring(0, 40)}...");
 
           late final String? email;
+
           try {
             email = user?.providerData.single.email;
           } catch (e) {
@@ -67,10 +73,13 @@ class _TestState extends State<AuthPage> {
               "tenantId: ${user?.tenantId}\n"
               "refreshToken: ${user?.refreshToken}\n"
               "idToken = $idToken}";
+          textAlign = TextAlign.start;
         } else {
           text = "no authenticated user";
+          textAlign = TextAlign.center ;
         }
-        return Padding(padding: const EdgeInsets.all(8.0), child: Text(text));
+
+        return Padding(padding: const EdgeInsets.all(8.0), child: Text(text, textAlign: textAlign));
       },
     );
 
