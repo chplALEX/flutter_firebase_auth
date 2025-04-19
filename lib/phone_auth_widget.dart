@@ -87,7 +87,8 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
     _verificationId = null;
     _isVerifyPhoneNumberDoing = true;
 
-    _firebaseAuth.verifyPhoneNumber(
+    _firebaseAuth
+        .verifyPhoneNumber(
       phoneNumber: _phoneNumberController.text,
       verificationCompleted: (credential) {
         _snackMessage(context, message: 'verification completed');
@@ -103,7 +104,8 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
       codeAutoRetrievalTimeout: (_) {
         _snackMessage(context, message: 'code auto retrieval timeout');
       },
-    ).then((_) {
+    )
+        .then((_) {
       _isVerifyPhoneNumberDoing = false;
     });
   }
@@ -129,7 +131,7 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
       smsCode: _otpCodeController.text,
     );
 
-    _signInWithCredential(credential);
+    _signInWithCredential(context, credential: credential);
   }
 
   void _snackMessage(BuildContext context, {required String message}) {
@@ -139,12 +141,22 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
   }
 
   void _signInWithCredential(BuildContext context, {required PhoneAuthCredential credential}) async {
+    if (_isSignInDoing) {
+      _snackMessage(context, message: 'Sign in is doing');
+      return;
+    }
+
+    _isSignInDoing = true;
+
     try {
-      _signInDoing = true;
       await _firebaseAuth.signInWithCredential(credential);
+      // ignore: use_build_context_synchronously
       _snackMessage(context, message: 'Sign in successful');
     } catch (error) {
-
+      // ignore: use_build_context_synchronously
+      _snackMessage(context, message: 'Sign in failed');
     }
+
+    _isSignInDoing = false;
   }
 }
