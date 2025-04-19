@@ -54,7 +54,10 @@ class AuthApp extends StatelessWidget {
         body: PopScope(
           canPop: false,
           onPopInvokedWithResult: (_, __) => _onPopInvokedWithResult(),
-          child: initError == null ? const AuthPage() : _errorPage(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            child: initError == null ? const AuthPage() : _errorPage(),
+          ),
         ),
       ),
     );

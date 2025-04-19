@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_firebase/phone_auth_widget.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthPage extends StatefulWidget {
@@ -28,6 +29,7 @@ class _TestState extends State<AuthPage> {
   Widget build(BuildContext context) {
     final builders = [
       (BuildContext context) => _authWidget(context),
+      (BuildContext context) => PhoneAuthWidget(),
       (BuildContext context) => _googleWidget(context),
       (BuildContext context) => _facebookWidget(context),
       (BuildContext context) => _appleWidget(context),
