@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "876521885587",
-    "project_id": "avisror-prod",
-    "storage_bucket": "avisror-prod.firebasestorage.app"
+    "project_number": "515323707514",
+    "project_id": "avisror-dev",
+    "storage_bucket": "avisror-dev.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:876521885587:android:401fcb4c63975c1e916266",
+        "mobilesdk_app_id": "1:515323707514:android:a2c74fa1c3f99ebc143bc3",
         "android_client_info": {
-          "package_name": "com.avisror.app"
+          "package_name": "com.avisror.app.dev"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAzuZZE2m7HLm3yuyqL0IRcJ6dRyU3k20E"
+          "current_key": "AIzaSyAuM2BYosm1ea89q73S5yfihS4mnmkrfm4"
         }
       ],
       "services": {

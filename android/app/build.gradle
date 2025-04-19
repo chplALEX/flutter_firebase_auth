@@ -41,7 +41,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.avisror.app.dev"
+        applicationId "com.avisror.app"
         minSdkVersion 23
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
@@ -54,7 +54,7 @@ android {
         }
     }
 
-    namespace 'com.avisror.app.dev'
+    namespace 'com.avisror.app'
 }
 
 flutter {

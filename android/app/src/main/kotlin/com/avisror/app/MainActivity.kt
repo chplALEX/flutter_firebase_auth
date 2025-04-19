@@ -1,4 +1,4 @@
-package com.avisror.app.dev
+package com.avisror.app
 
 import io.flutter.embedding.android.FlutterActivity
 

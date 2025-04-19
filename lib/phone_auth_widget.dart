@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +44,7 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
   Widget _phoneNumberInput(BuildContext context) {
     return _input(
       labelText: 'Phone Number',
+      controller: _phoneNumberController,
       onPressed: () => _onPhoneNumberSend(context),
     );
   }
@@ -49,15 +52,21 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
   Widget _otpCodeInput(BuildContext context) {
     return _input(
       labelText: 'OTP code',
+      controller: _otpCodeController,
       onPressed: () => _onOtpCodeSend(context),
     );
   }
 
-  Widget _input({required String labelText, required VoidCallback onPressed}) {
+  Widget _input({
+    required String labelText,
+    required TextEditingController controller,
+    required VoidCallback onPressed,
+  }) {
     return Row(
       children: [
         Expanded(
           child: TextField(
+            controller: controller,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               labelText: labelText,
@@ -73,7 +82,7 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
     );
   }
 
-  void _onPhoneNumberSend(BuildContext context) {
+  void _onPhoneNumberSend(BuildContext context) async {
     if (_phoneNumberController.text.trim().isEmpty) {
       _snackMessage(context, message: 'Phone number is empty');
       return;
@@ -87,27 +96,39 @@ class _PhoneAuthWidgetState extends State<PhoneAuthWidget> {
     _verificationId = null;
     _isVerifyPhoneNumberDoing = true;
 
-    _firebaseAuth
-        .verifyPhoneNumber(
-      phoneNumber: _phoneNumberController.text,
-      verificationCompleted: (credential) {
-        _snackMessage(context, message: 'verification completed');
-        _signInWithCredential(context, credential: credential);
-      },
-      verificationFailed: (error) {
-        _snackMessage(context, message: 'verification failed');
-      },
-      codeSent: (verificationId, _) {
-        _snackMessage(context, message: 'code sent');
-        _verificationId = verificationId;
-      },
-      codeAutoRetrievalTimeout: (_) {
-        _snackMessage(context, message: 'code auto retrieval timeout');
-      },
-    )
-        .then((_) {
+    log('Phone verification started, phone number: ${_phoneNumberController.text}');
+
+    try {
+      await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: _phoneNumberController.text,
+        verificationCompleted: (credential) {
+          log('Verification completed, credential: $credential');
+          _snackMessage(context, message: 'verification completed');
+          _signInWithCredential(context, credential: credential);
+        },
+        verificationFailed: (error) {
+          log('Verification failed, error: $error');
+          _snackMessage(context, message: 'verification failed');
+        },
+        codeSent: (verificationId, _) {
+          log('Code sent, verificationId: $verificationId');
+          _snackMessage(context, message: 'code sent');
+          _verificationId = verificationId;
+        },
+        codeAutoRetrievalTimeout: (_) {
+          log('Code auto retrieval timeout');
+          _snackMessage(context, message: 'code auto retrieval timeout');
+        },
+      );
       _isVerifyPhoneNumberDoing = false;
-    });
+      // ignore: use_build_context_synchronously
+      _snackMessage(context, message: 'Phone verification started');
+    } catch (error) {
+      log('Phone verification error: $error');
+      // ignore: use_build_context_synchronously
+      _snackMessage(context, message: 'Phone verification failed');
+      _isVerifyPhoneNumberDoing = false;
+    }
   }
 
   void _onOtpCodeSend(BuildContext context) {

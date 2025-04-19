@@ -47,30 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDqsKJiXg5oJhmQ8EjRjZEbTMou1lqsi-k',
-    appId: '1:515323707514:web:4743e29b567230bd143bc3',
-    messagingSenderId: '515323707514',
-    projectId: 'avisror-dev',
-    authDomain: 'avisror-dev.firebaseapp.com',
-    storageBucket: 'avisror-dev.firebasestorage.app',
-    measurementId: 'G-HZRK6BS0T2',
+    apiKey: 'AIzaSyDWHphTdD-oh_k50s8wtN_aALX5fhqKf4c',
+    appId: '1:876521885587:web:4f1a650af4d6e28f916266',
+    messagingSenderId: '876521885587',
+    projectId: 'avisror-prod',
+    authDomain: 'avisror-prod.firebaseapp.com',
+    storageBucket: 'avisror-prod.firebasestorage.app',
+    measurementId: 'G-4YRGV0CEPR',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAuM2BYosm1ea89q73S5yfihS4mnmkrfm4',
-    appId: '1:515323707514:android:a2c74fa1c3f99ebc143bc3',
-    messagingSenderId: '515323707514',
-    projectId: 'avisror-dev',
-    storageBucket: 'avisror-dev.firebasestorage.app',
+    apiKey: 'AIzaSyAzuZZE2m7HLm3yuyqL0IRcJ6dRyU3k20E',
+    appId: '1:876521885587:android:401fcb4c63975c1e916266',
+    messagingSenderId: '876521885587',
+    projectId: 'avisror-prod',
+    storageBucket: 'avisror-prod.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCxB0331M3GYWn4cwROtqoq553vfbK7kZw',
-    appId: '1:515323707514:ios:6e72f57a5a728a01143bc3',
-    messagingSenderId: '515323707514',
-    projectId: 'avisror-dev',
-    storageBucket: 'avisror-dev.firebasestorage.app',
-    iosBundleId: 'com.avisror.app.dev',
+    apiKey: 'AIzaSyDsKRfOv7QnWJ1sxAukrMGKM4tnegpBjx0',
+    appId: '1:876521885587:ios:a4e45545c5261f55916266',
+    messagingSenderId: '876521885587',
+    projectId: 'avisror-prod',
+    storageBucket: 'avisror-prod.firebasestorage.app',
+    iosBundleId: 'com.avisror.app',
   );
-
 }
